@@ -1,0 +1,42 @@
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Log/OS files
+*.log
+*.swp
+.DS_Store
+
+# Android Studio
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# Keystore files
+*.jks
+*.keystore
+
+# Crashlytics/Firebase
+crashlytics-build.properties
+fabric.properties
+
+# Generated files
+captures/
+output.json
+
+# NDK
+obj/
+
+# Misc
+*.apk
+*.ap_
+*.cxx/
+
+# ETC
+.vscode/
