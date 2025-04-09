@@ -1,3 +1,12 @@
+import java.util.Properties
+
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localProperties.load(localPropertiesFile.inputStream())
+}
+val clientId = localProperties.getProperty("NAVER_CLIENT_ID") ?: "API key value is null"
+val clientSecret = localProperties.getProperty("NAVER_CLIENT_SECRET") ?: "API key value is null"
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -17,6 +26,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "NAVER_CLIENT_ID", "\"${clientId}\"")
+        buildConfigField("String", "NAVER_CLIENT_SECRET", "\"${clientSecret}\"")
     }
 
     buildTypes {
@@ -37,6 +49,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions{
         kotlinCompilerExtensionVersion = "1.5.11"
@@ -58,7 +71,10 @@ dependencies {
 
     api(libs.bundles.compose)
     implementation(project(":feature"))
+    implementation(project(":base"))
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+
+    api(libs.bundles.retrofit)
 }

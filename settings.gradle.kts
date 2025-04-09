@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "Exercise"
 include(":app")
 include(":feature")
+include(":base")
