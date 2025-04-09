@@ -17,6 +17,7 @@ retrofit = "2.11.0"
 okhttp = "4.12.0"
 gson = "2.10.1"
 coroutines = "1.9.0"
+serializationJson = "1.6.0"
 
 
 
@@ -50,6 +51,7 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 retrofit-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+serializationJson = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serializationJson" }
 
 # Coroutines
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
@@ -63,5 +65,5 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 
 [bundles]
 compose = ["active-compose","androidx-compose-ui", "androidx-compose-ui-tooling", "androidx-compose-ui-tooling-preview", "androidx-compose-foundation", "androidx-compose-material3", "navigation-compose","androidx-compose-runtime"]
-retrofit = ["retrofit", "okhttp","retrofit-converter-gson"]
+retrofit = ["retrofit", "okhttp","retrofit-converter-gson","serializationJson"]
 coroutines = ["coroutines-core", "coroutines-android"]

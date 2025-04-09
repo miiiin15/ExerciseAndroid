@@ -1,7 +1,9 @@
 package com.miiiin15.feature.home.presentation
 
 import androidx.lifecycle.ViewModel
-import com.miiiin15.feature.home.data.remote.HomeApiService
+import androidx.lifecycle.viewModelScope
+import com.miiiin15.base.domain.result.ResponseResult
+import com.miiiin15.feature.home.domain.usecase.SearchLocalUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -11,17 +13,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val homeApiService: HomeApiService
+    private val searchLocalUseCase: SearchLocalUseCase
 ) : ViewModel() {
-    private val scope = CoroutineScope(Job() + Dispatchers.Main)
-
     fun test() {
-        scope.launch {
-            try {
-                val result = homeApiService.searchLocal("kill", 10)
-                println("🔵result = $result")
-            } catch (e: Exception) {
-                println("❌에러 발생: ${e.message}")
+        viewModelScope.launch {
+            searchLocalUseCase("맘스터치").also {
+                when(it){
+                    is ResponseResult.Success->{
+                    }
+                    is ResponseResult.Failure -> {
+                    }
+                }
             }
         }
     }
