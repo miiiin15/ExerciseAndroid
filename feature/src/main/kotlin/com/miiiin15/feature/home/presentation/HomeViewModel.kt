@@ -39,11 +39,11 @@ class HomeViewModel @Inject constructor(
     private fun searchLocal() {
         val keyword = _viewState.value.keyword
         viewModelScope.launch {
-            when (val result = searchLocalUseCase(keyword, 10)) {
+            when (val result = searchLocalUseCase(keyword, 40)) {
                 is ResponseResult.Success -> {
                     _viewState.value = _viewState.value.copy(
                         isLoading = false,
-                        result = result.value,
+                        result = result.value.sortedBy { it.mapx.toLong() },
                         keyword = keyword
                     )
                 }

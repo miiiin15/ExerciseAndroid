@@ -16,6 +16,7 @@ data class HomeViewState(
     val isLoading: Boolean,
     val result: List<LocalItem>
 ) : ViewState {
+    val isEmpty: Boolean get() = result.isEmpty() && !isLoading
     companion object {
         fun Initial() = HomeViewState(
             keyword = "",
