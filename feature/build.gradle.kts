@@ -59,4 +59,5 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
     api(libs.bundles.retrofit)
     implementation(project(":base"))
+    implementation(libs.coil.compose)
 }

@@ -18,7 +18,7 @@ okhttp = "4.12.0"
 gson = "2.10.1"
 coroutines = "1.9.0"
 serializationJson = "1.6.0"
-
+coil = "2.6.0"
 
 
 [libraries]
@@ -37,6 +37,7 @@ androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "u
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "compose" }
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNavigation" }
 androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "compose" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 
 # Hilt
 hilt-core = { module = "com.google.dagger:hilt-core", version.ref = "dagger" }
@@ -56,6 +57,7 @@ serializationJson = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json
 # Coroutines
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

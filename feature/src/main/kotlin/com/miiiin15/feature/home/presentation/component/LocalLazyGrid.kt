@@ -1,9 +1,13 @@
 package com.miiiin15.feature.home.presentation.component
 
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -11,10 +15,17 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
+import com.miiiin15.feature.Constants
 import com.miiiin15.feature.home.domain.model.LocalItem
 
 fun String.removeHtmlTags(): String =
@@ -28,7 +39,8 @@ fun LocalLazyGrid(
         columns = GridCells.Fixed(3),
         modifier = Modifier.padding(8.dp)
     ) {
-        items(localItem, key = { it.mapx }) { item ->
+        items(localItem,
+            key = { it.mapx }) { item ->
             LocalLazyColumnItem(item)
         }
     }
@@ -38,17 +50,33 @@ fun LocalLazyGrid(
 fun LocalLazyColumnItem(
     item: LocalItem
 ) {
+    var expanded by remember { mutableStateOf(false) }
+    val imageWidthSize by animateDpAsState(targetValue = if (expanded) 90.dp else 64.dp, label = "")
+    val imageHeightSize by animateDpAsState(targetValue = if (expanded) 90.dp else 64.dp, label = "")
+
+
     Column(
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp).size(width = 140.dp, height = 140.dp),
+        modifier = Modifier
+            .padding(horizontal = 16.dp, vertical = 16.dp)
+            .size(width = 180.dp, height = 180.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
+        Row {
+            Image(
+                painter = rememberAsyncImagePainter( model = Constants.imageBaseUrl + item.title.removeHtmlTags() ),
+                contentDescription = item.title.removeHtmlTags(),
+                modifier = Modifier
+                    .size(width = imageWidthSize, height = imageHeightSize)
+                    .clickable { expanded = !expanded },
+                contentScale = ContentScale.Crop
+            )
+            LikeButton()
 
-        Box(modifier = Modifier.background(Color.Red).size(width = 48.dp, height = 48.dp)){}
-        Text(
-            item.title.removeHtmlTags())
-        Box(
+        }
+        Text(item.title.removeHtmlTags())
+        Row(
             modifier = Modifier
-                .background(color = androidx.compose.ui.graphics.Color.LightGray)
+                .background(color = Color.LightGray)
                 .padding(8.dp)
         ) {
             Text(item.category)

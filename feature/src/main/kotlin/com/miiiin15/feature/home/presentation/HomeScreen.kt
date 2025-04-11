@@ -49,7 +49,7 @@ fun HomeContent(
             TextField(
                 value = keyword,
                 onValueChange = onKeywordChange,
-                label = { Text("검색어 입력") }
+                placeholder = { Text("검색어를 입력하세요") },
             )
             Button(onClick = onSearchClick) { Text("검색") }
         }
