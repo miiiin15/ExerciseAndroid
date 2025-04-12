@@ -30,7 +30,15 @@ fun HomeScreen(
         isEmpty = viewState.value.isEmpty,
         result = viewState.value.result,
         onKeywordChange = { viewModel.processIntent(HomeIntent.Editing(it)) },
-        onSearchClick = { viewModel.processIntent(HomeIntent.Search) }
+        onSearchClick = { viewModel.processIntent(HomeIntent.Search) },
+        onLikedButtonClick = { newState, item ->
+            viewModel.processIntent(
+                HomeIntent.Like(
+                    newState,
+                    item
+                )
+            )
+        }
     )
 }
 
@@ -40,12 +48,14 @@ fun HomeContent(
     isEmpty: Boolean,
     result: List<LocalItem>,
     onKeywordChange: (String) -> Unit,
-    onSearchClick: () -> Unit
+    onSearchClick: () -> Unit,
+    onLikedButtonClick: (Boolean, LocalItem) -> Unit
 ) {
     Column {
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween) {
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
             TextField(
                 value = keyword,
                 onValueChange = onKeywordChange,
@@ -57,7 +67,8 @@ fun HomeContent(
             Text("검색어 없음")
         } else {
             LocalLazyGrid(
-                localItem = result
+                localItem = result,
+                onLikedButtonClick = onLikedButtonClick
             )
         }
 

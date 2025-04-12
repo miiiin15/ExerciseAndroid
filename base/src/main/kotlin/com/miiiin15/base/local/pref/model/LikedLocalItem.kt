@@ -1,7 +1,6 @@
-package com.miiiin15.feature.home.domain.model
+package com.miiiin15.base.local.pref.model
 
-
-data class LocalItem(
+data class LikedLocalItem(
     val title:String,
     val link:String,
     val category:String,
@@ -11,5 +10,4 @@ data class LocalItem(
     val roadAddress:String,
     val mapx:String,
     val mapy:String,
-    val isLiked: Boolean = false
 )

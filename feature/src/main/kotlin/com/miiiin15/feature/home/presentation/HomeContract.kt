@@ -9,6 +9,7 @@ interface HomeIntent : Intent {
     data object Initial : HomeIntent
     data class Editing(val keyword: String) : HomeIntent
     data object Search : HomeIntent
+    data class Like(val newState: Boolean, val item: LocalItem) : HomeIntent
 }
 
 data class HomeViewState(
@@ -17,6 +18,7 @@ data class HomeViewState(
     val result: List<LocalItem>
 ) : ViewState {
     val isEmpty: Boolean get() = result.isEmpty() && !isLoading
+
     companion object {
         fun Initial() = HomeViewState(
             keyword = "",

@@ -13,6 +13,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,7 +39,8 @@ fun String.removeHtmlTags(): String =
 
 @Composable
 fun LocalLazyGrid(
-    localItem: List<LocalItem>
+    localItem: List<LocalItem>,
+    onLikedButtonClick: (Boolean, LocalItem) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
@@ -41,18 +48,23 @@ fun LocalLazyGrid(
     ) {
         items(localItem,
             key = { it.mapx }) { item ->
-            LocalLazyColumnItem(item)
+            LocalLazyColumnItem(item, onLikedButtonClick)
         }
     }
 }
 
 @Composable
 fun LocalLazyColumnItem(
-    item: LocalItem
+    item: LocalItem,
+    onLikedButtonClick: (Boolean, LocalItem) -> Unit,
 ) {
+    var isLiked by remember { mutableStateOf(item.isLiked) }
     var expanded by remember { mutableStateOf(false) }
     val imageWidthSize by animateDpAsState(targetValue = if (expanded) 90.dp else 64.dp, label = "")
-    val imageHeightSize by animateDpAsState(targetValue = if (expanded) 90.dp else 64.dp, label = "")
+    val imageHeightSize by animateDpAsState(
+        targetValue = if (expanded) 90.dp else 64.dp,
+        label = ""
+    )
 
 
     Column(
@@ -63,14 +75,23 @@ fun LocalLazyColumnItem(
     ) {
         Row {
             Image(
-                painter = rememberAsyncImagePainter( model = Constants.imageBaseUrl + item.title.removeHtmlTags() ),
+                painter = rememberAsyncImagePainter(model = Constants.imageBaseUrl + item.title.removeHtmlTags()),
                 contentDescription = item.title.removeHtmlTags(),
                 modifier = Modifier
                     .size(width = imageWidthSize, height = imageHeightSize)
                     .clickable { expanded = !expanded },
                 contentScale = ContentScale.Crop
             )
-            LikeButton()
+            IconButton(onClick = {
+                onLikedButtonClick(!isLiked, item)
+                isLiked = !isLiked
+            }) {
+                Icon(
+                    imageVector = if (isLiked) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                    contentDescription = if (isLiked) "좋아요 취소" else "좋아요",
+                    tint = if (isLiked) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+                )
+            }
 
         }
         Text(item.title.removeHtmlTags())
@@ -145,5 +166,7 @@ fun PreviewLocalLazyColumn() {
             mapy = "375804973"
         )
     )
-    LocalLazyGrid(localItem = sampleItems)
+    LocalLazyGrid(localItem = sampleItems,
+        onLikedButtonClick = { _, _ -> }
+    )
 }
