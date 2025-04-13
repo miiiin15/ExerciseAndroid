@@ -7,17 +7,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.runtime.*
+import com.miiiin15.feature.home.domain.model.LocalItem
 
 @Composable
 fun LikeButton(
     isLikedInitial: Boolean = false,
-    onLikeClick: (Boolean) -> Unit = {}
 ) {
     var isLiked by remember { mutableStateOf(isLikedInitial) }
 
     IconButton(onClick = {
         isLiked = !isLiked
-        onLikeClick(isLiked)
     }) {
         Icon(
             imageVector = if (isLiked) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,

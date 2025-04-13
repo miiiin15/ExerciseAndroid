@@ -3,11 +3,18 @@ package com.miiiin15.feature.main.presentation
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.miiiin15.feature.home.navigation.homeNavGraph
+import com.miiiin15.feature.home.navigation.likeNavGraph
 import com.miiiin15.feature.main.navigation.MainNavigator
 import com.miiiin15.feature.main.navigation.rememberMainNavigator
 
@@ -15,11 +22,22 @@ import com.miiiin15.feature.main.navigation.rememberMainNavigator
 fun MainScreen(
     navigator: MainNavigator = rememberMainNavigator()
 ) {
+    val navController = navigator.navController
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
+    val items = listOf(
+        BottomNavItem.Home,
+        BottomNavItem.Like
+    )
+
     Scaffold(
         content = { innerPadding ->
-            Box (
-                modifier = Modifier.fillMaxSize().padding(innerPadding)
-            ){
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+            ) {
                 NavHost(
                     navController = navigator.navController,
                     startDestination = navigator.startDestination,
@@ -28,6 +46,31 @@ fun MainScreen(
                         padding = innerPadding,
                         onDetailClick = { navigator.navigateToDetail() },
                         onBackClick = { navigator.popBackStack() }
+                    )
+                    likeNavGraph(
+                        onBackClick = { navigator.popBackStack() }
+                    )
+                }
+            }
+        },
+        bottomBar = {
+            NavigationBar {
+                items.forEach { item ->
+                    NavigationBarItem(
+                        icon = { Icon(item.icon, contentDescription = item.label) },
+                        label = { Text(item.label) },
+                        selected = currentRoute == item.route,
+                        onClick = {
+                            if (currentRoute != item.route) {
+                                navController.navigate(item.route) {
+                                    popUpTo(navController.graph.startDestinationId) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            }
+                        }
                     )
                 }
             }
