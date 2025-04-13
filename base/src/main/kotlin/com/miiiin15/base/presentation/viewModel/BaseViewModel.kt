@@ -10,7 +10,7 @@ interface ViewState
 interface Intent
 interface SingleEvent
 
-abstract class BaseViewMode<I : Intent, S : ViewState, E : SingleEvent>(initialState: S) : ViewModel() {
+abstract class BaseViewModel<I : Intent, S : ViewState, E : SingleEvent>(initialState: S) : ViewModel() {
 
     protected val _viewState = MutableStateFlow(initialState)
     val viewState: StateFlow<S> = _viewState

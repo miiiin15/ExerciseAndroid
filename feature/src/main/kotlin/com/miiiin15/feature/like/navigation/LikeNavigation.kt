@@ -1,8 +1,8 @@
-package com.miiiin15.feature.home.navigation
+package com.miiiin15.feature.like.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.miiiin15.feature.home.presentation.LikeScreen
+import com.miiiin15.feature.like.presentation.LikeScreen
 
 fun NavGraphBuilder.likeNavGraph(
     onBackClick: () -> Unit

@@ -12,7 +12,8 @@ fun LikedLocalItem.toDomain(): LocalItem = LocalItem(
     address = address,
     roadAddress = roadAddress,
     mapx = mapx,
-    mapy = mapy
+    mapy = mapy,
+    isLiked = true
 )
 
 fun LocalItem.toLocal(): LikedLocalItem = LikedLocalItem(

@@ -40,7 +40,7 @@ fun String.removeHtmlTags(): String =
 @Composable
 fun LocalLazyGrid(
     localItem: List<LocalItem>,
-    onLikedButtonClick: (Boolean, LocalItem) -> Unit
+    onLikedButtonClick: (Boolean, LocalItem?) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
@@ -56,7 +56,7 @@ fun LocalLazyGrid(
 @Composable
 fun LocalLazyColumnItem(
     item: LocalItem,
-    onLikedButtonClick: (Boolean, LocalItem) -> Unit,
+    onLikedButtonClick: (Boolean, LocalItem?) -> Unit,
 ) {
     var isLiked by remember { mutableStateOf(item.isLiked) }
     var expanded by remember { mutableStateOf(false) }

@@ -3,7 +3,7 @@ package com.miiiin15.feature.home.presentation
 import androidx.lifecycle.viewModelScope
 import com.miiiin15.base.domain.result.ResponseResult
 import com.miiiin15.base.local.pref.PrefUtil
-import com.miiiin15.base.presentation.viewModel.BaseViewMode
+import com.miiiin15.base.presentation.viewModel.BaseViewModel
 import com.miiiin15.feature.home.data.mapper.toLocal
 import com.miiiin15.feature.home.domain.usecase.SearchLocalUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +14,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val searchLocalUseCase: SearchLocalUseCase,
     private val prefUtil: PrefUtil
-) : BaseViewMode<HomeIntent, HomeViewState, HomeSingleEvent>(HomeViewState.Initial()) {
+) : BaseViewModel<HomeIntent, HomeViewState, HomeSingleEvent>(HomeViewState.Initial()) {
 
     override fun processIntent(intent: HomeIntent) {
         when (intent) {

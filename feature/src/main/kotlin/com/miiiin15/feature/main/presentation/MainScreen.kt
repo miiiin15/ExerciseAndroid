@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.miiiin15.feature.home.navigation.homeNavGraph
-import com.miiiin15.feature.home.navigation.likeNavGraph
+import com.miiiin15.feature.like.navigation.likeNavGraph
 import com.miiiin15.feature.main.navigation.MainNavigator
 import com.miiiin15.feature.main.navigation.rememberMainNavigator
 

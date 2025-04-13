@@ -35,7 +35,7 @@ fun HomeScreen(
             viewModel.processIntent(
                 HomeIntent.Like(
                     newState,
-                    item
+                    item!!
                 )
             )
         }
@@ -49,7 +49,7 @@ fun HomeContent(
     result: List<LocalItem>,
     onKeywordChange: (String) -> Unit,
     onSearchClick: () -> Unit,
-    onLikedButtonClick: (Boolean, LocalItem) -> Unit
+    onLikedButtonClick: (Boolean, LocalItem?) -> Unit
 ) {
     Column {
         Row(
