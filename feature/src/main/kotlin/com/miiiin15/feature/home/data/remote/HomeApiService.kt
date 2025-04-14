@@ -5,12 +5,10 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface HomeApiService {
-
     @GET("local.json?")
     suspend fun searchLocal(
         @Query("query") keyword: String,
         @Query("display") display: Int = 10,
         @Query("start") start: Int = 1
     ): SearchLocalResponse
-
 }

@@ -16,7 +16,7 @@ class LocalRepositoryImpl @Inject constructor(
         start:Int,
     ): ResponseResult<List<LocalItem>>{
      return try {
-            val response = homeApiService.searchLocal(keyword, display)
+            val response = homeApiService.searchLocal(keyword, display,start)
          ResponseResult.Success(response.items.map { it.toDomainModel() })
         } catch (e: Exception) {
             ResponseResult.Failure(e)

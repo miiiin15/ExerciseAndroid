@@ -18,17 +18,23 @@ class HomeViewModel @Inject constructor(
 
     override fun processIntent(intent: HomeIntent) {
         when (intent) {
-            is HomeIntent.Initial -> {
-
-            }
+            is HomeIntent.Initial -> {}
 
             is HomeIntent.Editing -> {
                 _viewState.value = _viewState.value.copy(keyword = intent.keyword)
             }
 
             is HomeIntent.Search -> {
-                _viewState.value = _viewState.value.copy(isLoading = true)
-                searchLocal()
+                _viewState.value = _viewState.value.copy(isLoading = true, start = 1)
+                searchLocal(isLoadMore = false)
+            }
+
+            is HomeIntent.LoadNext -> {
+                if (!_viewState.value.isLoading) {
+                    _viewState.value =
+                        _viewState.value.copy(isLoading = true, start = _viewState.value.start + 5)
+                    searchLocal(isLoadMore = true)
+                }
             }
 
 
@@ -50,10 +56,11 @@ class HomeViewModel @Inject constructor(
     }
 
     // HomeViewModel.kt
-    private fun searchLocal() {
+    private fun searchLocal(isLoadMore: Boolean = false) {
         val keyword = _viewState.value.keyword
+        val start = _viewState.value.start
         viewModelScope.launch {
-            when (val result = searchLocalUseCase(keyword, 10,1)) {
+            when (val result = searchLocalUseCase(keyword, 5, start)) {
                 is ResponseResult.Success -> {
                     val likedList = prefUtil.likedLocalList.orEmpty().map { it.mapx }.toSet()
 
@@ -62,7 +69,7 @@ class HomeViewModel @Inject constructor(
                     }
                     _viewState.value = _viewState.value.copy(
                         isLoading = false,
-                        result = items,
+                        result = if (isLoadMore) _viewState.value.result + items else items,
                         keyword = keyword
                     )
                 }

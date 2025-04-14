@@ -10,12 +10,14 @@ interface HomeIntent : Intent {
     data class Editing(val keyword: String) : HomeIntent
     data object Search : HomeIntent
     data class Like(val newState: Boolean, val item: LocalItem) : HomeIntent
+    data object LoadNext: HomeIntent
 }
 
 data class HomeViewState(
     val keyword: String,
     val isLoading: Boolean,
-    val result: List<LocalItem>
+    val result: List<LocalItem>,
+    val start:Int,
 ) : ViewState {
     val isEmpty: Boolean get() = result.isEmpty() && !isLoading
 
@@ -23,7 +25,8 @@ data class HomeViewState(
         fun Initial() = HomeViewState(
             keyword = "",
             isLoading = false,
-            result = emptyList()
+            result = emptyList(),
+            start = 1
         )
     }
 }
