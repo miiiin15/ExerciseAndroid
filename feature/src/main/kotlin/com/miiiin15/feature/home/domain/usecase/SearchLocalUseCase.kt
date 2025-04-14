@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class SearchLocalUseCase @Inject constructor(
     private val localRepository: LocalRepository
-){
-    suspend operator fun invoke(keyword: String, display: Int = 10) =
-        localRepository.searchLocal(keyword, display)
+) {
+    suspend operator fun invoke(keyword: String, display: Int = 10, start: Int = 1) =
+        localRepository.searchLocal(keyword, display, start)
 }

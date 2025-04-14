@@ -12,7 +12,8 @@ class LocalRepositoryImpl @Inject constructor(
 ) : LocalRepository {
     override suspend fun searchLocal(
         keyword: String,
-        display: Int
+        display: Int,
+        start:Int,
     ): ResponseResult<List<LocalItem>>{
      return try {
             val response = homeApiService.searchLocal(keyword, display)

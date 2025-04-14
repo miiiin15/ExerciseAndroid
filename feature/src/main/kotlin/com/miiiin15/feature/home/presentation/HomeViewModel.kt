@@ -53,7 +53,7 @@ class HomeViewModel @Inject constructor(
     private fun searchLocal() {
         val keyword = _viewState.value.keyword
         viewModelScope.launch {
-            when (val result = searchLocalUseCase(keyword, 40)) {
+            when (val result = searchLocalUseCase(keyword, 10,1)) {
                 is ResponseResult.Success -> {
                     val likedList = prefUtil.likedLocalList.orEmpty().map { it.mapx }.toSet()
 
