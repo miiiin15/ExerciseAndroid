@@ -57,9 +57,18 @@ class HomeViewModel @Inject constructor(
 
     // HomeViewModel.kt
     private fun searchLocal(isLoadMore: Boolean = false) {
+
+
         val keyword = _viewState.value.keyword
         val start = _viewState.value.start
         viewModelScope.launch {
+
+            if(_viewState.value.keyword.isBlank()) {
+                _singleEvent.emit(HomeSingleEvent.ShowToast("검색어를 입력해주세요."))
+                _viewState.value = _viewState.value.copy(isLoading = false)
+                return@launch
+            }
+
             when (val result = searchLocalUseCase(keyword, 5, start)) {
                 is ResponseResult.Success -> {
                     val likedList = prefUtil.likedLocalList.orEmpty().map { it.mapx }.toSet()

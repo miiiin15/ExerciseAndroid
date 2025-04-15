@@ -24,6 +24,7 @@ class RequestHeaderInterceptor @Inject constructor(
             println("Error in RequestHeaderInterceptor: ${e.message}")
             chain.request()
         }
+        println("🔵Request URL: ${newRequest.url}")
         return chain.proceed(newRequest)
     }
 }
